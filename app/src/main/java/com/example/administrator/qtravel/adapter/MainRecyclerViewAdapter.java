@@ -58,6 +58,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter {
             public void onClick(View view) {
                 Intent intent = new Intent(MyApplication.getContext(), WebViewActivity.class);
                 intent.putExtra("Url", list.get(holder.getAdapterPosition()-2).getContent());
+                intent.putExtra("Title", list.get(holder.getAdapterPosition()-2).getTitle());
                 parent.getContext().startActivity(intent);
             }
         });

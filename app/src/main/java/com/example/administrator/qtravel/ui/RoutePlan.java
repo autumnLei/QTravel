@@ -338,7 +338,7 @@ public class RoutePlan extends Activity implements BaiduMap.OnMapClickListener,
                 }
             });
             builder.create().show();
-            return;
+            finish();
         }
         if (result.error == SearchResult.ERRORNO.NO_ERROR) {
             nodeIndex = -1;

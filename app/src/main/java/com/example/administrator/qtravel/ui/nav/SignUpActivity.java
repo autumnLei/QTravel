@@ -66,15 +66,16 @@ public class SignUpActivity extends AppCompatActivity {
                                         @Override
                                         public void run() {
                                             if(result.equals("1")){
-                                                Toast.makeText(SignUpActivity.this,"注册成功", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(SignUpActivity.this,"注册成功！", Toast.LENGTH_SHORT).show();
                                                 Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                                                 intent.putExtra("login", "ok");
                                                 startActivity(intent);
                                                 overridePendingTransition(R.anim.screen_zoom_in, R.anim.screen_zoom_out);
                                                 finish();
-                                            }else{
-                                                Toast.makeText(SignUpActivity.this,"注册失败",Toast.LENGTH_SHORT).show();
-                                            }
+                                            }else if (result.equals("2")){
+                                                Toast.makeText(SignUpActivity.this,"已被注册！",Toast.LENGTH_SHORT).show();
+                                            }else
+                                                Toast.makeText(SignUpActivity.this,"注册失败！",Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }

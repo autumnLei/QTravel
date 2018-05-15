@@ -4,6 +4,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -26,6 +27,7 @@ public class WebViewActivity extends AppCompatActivity {
 
     ActivityWebViewBinding activityWebViewBinding;
     private String url = null;
+    private String title = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +35,11 @@ public class WebViewActivity extends AppCompatActivity {
         activityWebViewBinding = DataBindingUtil.setContentView(this, R.layout.activity_web_view);
         activityWebViewBinding.webView.getSettings().setJavaScriptEnabled(true);
         activityWebViewBinding.webView.setWebViewClient(new WebViewClient());
-        initToolBar();
         Intent intent = getIntent();
         url = intent.getStringExtra("Url");
-        if (url == null) {
-            activityWebViewBinding.webView.loadUrl("https://www.baidu.com");
-        }else {
-            activityWebViewBinding.webView.loadUrl(url);
-        }
+        title = intent.getStringExtra("Title");
+        initToolBar();
+        activityWebViewBinding.webView.loadUrl(url);
     }
 
     public void initToolBar(){
@@ -54,6 +53,8 @@ public class WebViewActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.back);
         }
+        mTitleToolBar.setTitleTextColor(Color.WHITE);
+        mTitleToolBar.setTitle(title);
         mTitleToolBar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.more));
         mTitleToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

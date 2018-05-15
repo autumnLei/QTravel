@@ -6,10 +6,10 @@
         android:id="@+id/search"
         android:icon="@drawable/search"
         android:title="Search"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/local"
         android:icon="@drawable/local"
         android:title="local"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 </menu>

@@ -40,6 +40,7 @@ public class VenueSearchRecyclerViewAdapter extends RecyclerView.Adapter {
             public void onClick(View view) {
                 Intent intent = new Intent(MyApplication.getContext(), WebViewActivity.class);
                 intent.putExtra("Url", list.get(holder.getAdapterPosition()).getUrl());
+                intent.putExtra("Title", list.get(holder.getAdapterPosition()).getTitle());
                 parent.getContext().startActivity(intent);
             }
         });

@@ -54,7 +54,7 @@ public class PictureSearchActivity extends AppCompatActivity {
         initCoach();
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         binding.recycler.setLayoutManager(layoutManager);
-        adapter = new PictureSearchAdapter(mList);
+        adapter = new PictureSearchAdapter(mList, searchText);
         binding.recycler.setAdapter(adapter);
 
     }

@@ -57,7 +57,9 @@ import com.example.administrator.qtravel.service.LocationService;
 import com.example.administrator.qtravel.ui.LocationActivity;
 import com.example.administrator.qtravel.ui.nav.LoginActivity;
 import com.example.administrator.qtravel.ui.WebViewActivity;
+import com.example.administrator.qtravel.ui.nav.NavAboutActivity;
 import com.example.administrator.qtravel.ui.nav.NavHomePageActivity;
+import com.example.administrator.qtravel.ui.search.FrendSearchActivity;
 import com.example.administrator.qtravel.ui.search.PictureSearchActivity;
 import com.example.administrator.qtravel.ui.search.VenueSearchActivity;
 import com.example.administrator.qtravel.viewModel.ViewModelMain;
@@ -227,11 +229,13 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.nav_about:
-                        Intent intent2 = new Intent(MyApplication.getContext(), NavHomePageActivity.class);
+                        Intent intent2 = new Intent(MyApplication.getContext(), NavAboutActivity.class);
                         startActivity(intent2);
                         break;
                     case R.id.nav_feedback:
-                        Intent intent4 = new Intent(MyApplication.getContext(), NavHomePageActivity.class);;
+                        Intent intent4 = new Intent(MyApplication.getContext(), WebViewActivity.class);
+                        intent4.putExtra("Url", "https://github.com/autumnLei/QTravel/issues/new");
+                        intent4.putExtra("Title", "QTravel反馈页面");
                         startActivity(intent4);
                         break;
                     case R.id.nav_quit:
@@ -259,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent2);
                 break;
             case R.id.linear03:
-                Intent intent3 = new Intent(this, NavHomePageActivity.class);
+                Intent intent3 = new Intent(this, FrendSearchActivity.class);
                 startActivity(intent3);
                 break;
             case R.id.linear04:
@@ -284,6 +288,8 @@ public class MainActivity extends AppCompatActivity {
                break;
             case R.id.search:
                 Intent intent2 = new Intent(this, WebViewActivity.class);
+                intent2.putExtra("Url", "https://www.baidu.com/");
+                intent2.putExtra("Title", "百度首页");
                 startActivity(intent2);
                 break;
             case R.id.local:

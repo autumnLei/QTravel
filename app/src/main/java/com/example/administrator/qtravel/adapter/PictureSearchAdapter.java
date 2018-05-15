@@ -26,6 +26,7 @@ import java.util.List;
 public class PictureSearchAdapter extends RecyclerView.Adapter<PictureSearchAdapter.ViewHolder> {
 
     private List<PictureSearchRecyclerView> mList = new ArrayList<>();
+    private String searchText;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
@@ -36,8 +37,9 @@ public class PictureSearchAdapter extends RecyclerView.Adapter<PictureSearchAdap
         }
     }
 
-    public PictureSearchAdapter(List<PictureSearchRecyclerView> coachList) {
+    public PictureSearchAdapter(List<PictureSearchRecyclerView> coachList, String searchText) {
         mList = coachList;
+        this.searchText = searchText;
     }
 
     @Override
@@ -51,6 +53,7 @@ public class PictureSearchAdapter extends RecyclerView.Adapter<PictureSearchAdap
             public void onClick(View v) {
                 Intent intent = new Intent(MyApplication.getContext(), WebViewActivity.class);
                 intent.putExtra("Url", mList.get(holder.getAdapterPosition()).getUrl());
+                intent.putExtra("Title", searchText);
                 parent.getContext().startActivity(intent);
             }
         });

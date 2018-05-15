@@ -6,6 +6,8 @@
     <string name="actionbar_webview_open">打开链接</string>
     <string name="action_share">分享</string>
     <string name="venue_search_activity_title">场馆</string>
+    <string name="frend_search_activity_title">Ghost room</string>
+    <string name="picture_search_activity_title">图片</string>
     <string name="fragment1">篮球</string>
     <string name="fragment2">网球</string>
     <string name="fragment3">游泳</string>

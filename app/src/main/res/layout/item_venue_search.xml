@@ -19,7 +19,7 @@
 
             <ImageView
                 android:id="@+id/imageView_sports"
-                android:src="@mipmap/ic_launcher"
+                android:src="@drawable/defaultmap"
                 android:layout_width="112dp"
                 android:layout_height="80dp" />
 
