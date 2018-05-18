@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -62,8 +63,9 @@ public class VenueSearchFragment extends Fragment {
         Bundle bundle = getArguments();
         type = bundle.getString("TYPE");
         Log.d("kk", "onCreateView: "+type);
-        //发起poi检索
-        select();
+        //发起poi检索 fragment预加载是从onCreateView到onDestroyView
+        if(poiList.size()==0)
+            select();
         //View view = inflater.inflate(R.layout.fragment_venue_search, container, false);
         FragmentVenueSearchBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_venue_search, container, false);
         RecyclerView recyclerView = binding.recyclerViewVenue;

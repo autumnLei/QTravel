@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
@@ -46,6 +48,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
+import com.bumptech.glide.Glide;
 import com.example.administrator.qtravel.adapter.MainRecyclerViewAdapter;
 import com.example.administrator.qtravel.databinding.ActivityMainBinding;
 import com.example.administrator.qtravel.databinding.NavHeaderBinding;
@@ -71,10 +74,24 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -90,14 +107,13 @@ public class MainActivity extends AppCompatActivity {
     private double mExitTime;
     //头像图片文件
     private File mImageFile;
-    //裁剪头像传的参数
-    public static final String IMAGE_UNSPECIFIED = "image/*";
 
     private LocationClient mLocationClient;
     MainRecyclerViewAdapter mainRecyclerViewAdapter;
 
     public static boolean isLogin = false;
     public static String local;
+    private String account;
 
     private List<String> pictures = new ArrayList<>();
     private List<MainRecyclerView> messages = new ArrayList<>();
@@ -337,9 +353,15 @@ public class MainActivity extends AppCompatActivity {
         String login = intent1.getStringExtra("login");
         if (login!=null) {
             Log.d("login", "onNewIntent: "+"已登录"+login);
-            imageView.setImageResource(R.drawable.touxiang);
+            if(intent1.getStringExtra("head")==null || intent1.getStringExtra("head").equals(""))
+                imageView.setImageResource(R.drawable.defaultmap);
+            else
+                Glide.with(MyApplication.getContext())
+                        .load(intent1.getStringExtra("head"))//图片地址
+                        .into(imageView);
             isLogin = true;
         }
+        account = intent1.getStringExtra("account");
     }
 
     @Override
@@ -473,12 +495,47 @@ public class MainActivity extends AppCompatActivity {
 
     private void createImageFile() {
         mImageFile = new File(getExternalCacheDir(), "touxiang.jpg");
+        uploadMultiFile(mImageFile);
         try {
             mImageFile.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(this, "创建文件对象失败", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void uploadMultiFile(File file) {
+        final String url = "http://111.230.17.135:8080/QTravel/UploadFileServlet";
+
+        RequestBody fileBody = RequestBody.create(MediaType.parse("application/octet-stream"), file);
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("image", account+".jpg", fileBody)
+                .build();
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+
+
+        final okhttp3.OkHttpClient.Builder httpBuilder = new OkHttpClient.Builder();
+        OkHttpClient okHttpClient  = httpBuilder
+                //设置超时
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(15, TimeUnit.SECONDS)
+                .build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("Main", "uploadMultiFile() e=" + e);
+            }
+
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.i("Main", "uploadMultiFile() response=" + response.body().string());
+            }
+        });
     }
 
     private void selectCamera() {
@@ -528,6 +585,20 @@ public class MainActivity extends AppCompatActivity {
         if (local == null) {
             requestLocation();
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 1) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //发起定位 第一次安装时需要
+                requestLocation();
+            }
+            else {
+                Toast.makeText(this, "拒绝定位权限app将不能正常获取数据！", Toast.LENGTH_SHORT).show();
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     /**

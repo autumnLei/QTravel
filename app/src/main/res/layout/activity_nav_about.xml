@@ -54,15 +54,14 @@
         android:layout_height="match_parent"
         android:textSize="12sp"
         android:text=" 用到的开源库\n
-    implementation 'com.android.support:recyclerview-v7:27.1.1'
-    implementation 'com.android.support:cardview-v7:27.1.1'
-    implementation 'de.hdodenhof:circleimageview:2.1.0'
-    implementation 'com.github.bumptech.glide:glide:4.2.0'
-    implementation 'org.jsoup:jsoup:1.11.2'
-    implementation 'com.youth.banner:banner:1.4.10'
-
-    implementation 'io.reactivex.rxjava2:rxjava:2.0.7'
-    implementation 'com.squareup.okhttp3:okhttp:3.7.0'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'\n
+    implementation 'com.android.support:cardview-v7:27.1.1'\n
+    implementation 'de.hdodenhof:circleimageview:2.1.0'\n
+    implementation 'com.github.bumptech.glide:glide:4.2.0'\n
+    implementation 'org.jsoup:jsoup:1.11.2'\n
+    implementation 'com.youth.banner:banner:1.4.10'\n
+    implementation 'io.reactivex.rxjava2:rxjava:2.0.7'\n
+    implementation 'com.squareup.okhttp3:okhttp:3.7.0'\n
     implementation 'io.crossbar.autobahn:autobahn-android:18.5.1'"/>
 
     </LinearLayout>

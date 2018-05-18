@@ -69,6 +69,7 @@ public class SignUpActivity extends AppCompatActivity {
                                                 Toast.makeText(SignUpActivity.this,"注册成功！", Toast.LENGTH_SHORT).show();
                                                 Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                                                 intent.putExtra("login", "ok");
+                                                intent.putExtra("account", name);
                                                 startActivity(intent);
                                                 overridePendingTransition(R.anim.screen_zoom_in, R.anim.screen_zoom_out);
                                                 finish();

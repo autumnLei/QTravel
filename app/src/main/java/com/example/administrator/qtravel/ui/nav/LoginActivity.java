@@ -70,10 +70,13 @@ public class LoginActivity extends AppCompatActivity {
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            if (result.equals("1")) {
+                                            if (!result.equals("0")) {
+                                                //Toast.makeText(LoginActivity.this, result, Toast.LENGTH_SHORT).show();
                                                 Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                                 intent.putExtra("login", "ok");
+                                                intent.putExtra("account", account);
+                                                intent.putExtra("head", result);
                                                 startActivity(intent);
                                                 finish();
                                             } else {
