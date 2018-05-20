@@ -58,6 +58,7 @@ import com.example.administrator.qtravel.model.Main;
 import com.example.administrator.qtravel.model.MainRecyclerView;
 import com.example.administrator.qtravel.service.LocationService;
 import com.example.administrator.qtravel.ui.LocationActivity;
+import com.example.administrator.qtravel.ui.bikenavi.BNaviMainActivity;
 import com.example.administrator.qtravel.ui.nav.LoginActivity;
 import com.example.administrator.qtravel.ui.WebViewActivity;
 import com.example.administrator.qtravel.ui.nav.NavAboutActivity;
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static boolean isLogin = false;
     public static String local;
-    private String account;
+    private String account = null;
 
     private List<String> pictures = new ArrayList<>();
     private List<MainRecyclerView> messages = new ArrayList<>();
@@ -195,9 +196,8 @@ public class MainActivity extends AppCompatActivity {
                                         selectAlbum();
                                     }
                                 }
-                            })
-                            .create()
-                            .show();
+                            }).create().show();
+
                 }
             }
         });
@@ -304,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
                break;
             case R.id.search:
                 Intent intent2 = new Intent(this, WebViewActivity.class);
-                intent2.putExtra("Url", "https://www.baidu.com/");
+                intent2.putExtra("Url", "http://www.baidu.com/");
                 intent2.putExtra("Title", "百度首页");
                 startActivity(intent2);
                 break;
@@ -364,6 +364,12 @@ public class MainActivity extends AppCompatActivity {
         account = intent1.getStringExtra("account");
     }
 
+    /**
+     * 接收相机或者相册传回来的图片文件
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -388,6 +394,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
         }
+        //上传头像
+        uploadMultiFile(mImageFile);
     }
 
     /**
@@ -494,13 +502,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createImageFile() {
-        mImageFile = new File(getExternalCacheDir(), "touxiang.jpg");
-        uploadMultiFile(mImageFile);
+        mImageFile = new File(getExternalCacheDir(), account+".jpg");
         try {
             mImageFile.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(this, "创建文件对象失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "创建文件对象失败", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -517,7 +524,6 @@ public class MainActivity extends AppCompatActivity {
                 .post(requestBody)
                 .build();
 
-
         final okhttp3.OkHttpClient.Builder httpBuilder = new OkHttpClient.Builder();
         OkHttpClient okHttpClient  = httpBuilder
                 //设置超时
@@ -529,7 +535,6 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call call, IOException e) {
                 Log.e("Main", "uploadMultiFile() e=" + e);
             }
-
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {

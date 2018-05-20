@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:padding="2dp"
                     android:layout_margin="12dp"
-                    android:text="点击地图上地点添加 然后点击按钮"/>
+                    android:text="点击地图上地点添加 然后点击这里开始导航"/>
 
 
         </LinearLayout>

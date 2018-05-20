@@ -55,7 +55,6 @@
         <activity android:name=".ui.nav.LoginActivity" />
         <activity android:name=".ui.nav.SignUpActivity" />
         <activity android:name=".ui.WebViewActivity" />
-        <activity android:name=".ui.RoutePlan" />
         <activity android:name=".ui.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -67,6 +66,12 @@
         <activity android:name=".ui.search.PictureSearchActivity" />
         <activity android:name=".ui.search.FrendSearchActivity"/>
         <activity android:name=".ui.nav.NavAboutActivity"/>
+        <!--导航的三个acitivity-->
+        <activity android:name=".ui.bikenavi.BNaviMainActivity"/>
+        <activity android:name=".ui.bikenavi.BNaviGuideActivity"/>
+        <activity android:name=".ui.bikenavi.WNaviGuideActivity"/>
+
+
     </application>
 
 </manifest>

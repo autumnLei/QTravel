@@ -40,6 +40,7 @@ import com.example.administrator.qtravel.global.MyApplication;
 import com.example.administrator.qtravel.overlayutil.MyOverLay;
 import com.example.administrator.qtravel.service.LocationService;
 import com.example.administrator.qtravel.service.Utils;
+import com.example.administrator.qtravel.ui.bikenavi.BNaviMainActivity;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -70,7 +71,8 @@ public class LocationActivity extends Activity {
     double longitude;//所在位置
 
     ArrayList<String> poiList = new ArrayList<>();
-
+    ArrayList<String> locX = new ArrayList<>();
+    ArrayList<String> locY = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,11 +83,16 @@ public class LocationActivity extends Activity {
         button_poi.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LocationActivity.this, RoutePlan.class);
-                if (locationList.size()!=0){
+                Intent intent = new Intent(LocationActivity.this, BNaviMainActivity.class);
+                if (locationList.size()!=0&&locationList.getLast().location.getPoiList()!=null){
                     poiList.add(0, locationList.getLast().location.getPoiList().get(0).getName());
-                    Log.d("kkkkkkkk", "onClick: "+poiList.get(0));
+                    locX.add(0, locationList.getLast().location.getLatitude()+"");
+                    locY.add(0, locationList.getLast().location.getLongitude()+"");
+                    Log.d("kkkkkkkk", "onClick: "+poiList.get(0)+" "+locX.get(0)+" "+locY.get(0));
                     intent.putStringArrayListExtra("poiList", poiList);
+                    intent.putStringArrayListExtra("locX", locX);
+                    intent.putStringArrayListExtra("locY", locY);
+
                     if (poiList.size() > 1) {
                         startActivity(intent);
                         finish();
@@ -130,7 +137,10 @@ public class LocationActivity extends Activity {
              */
             public boolean onMapPoiClick(MapPoi poi) {
                 if (poiList.size() < 5){
+                    locX.add(poi.getPosition().latitude+"");
+                    locY.add(poi.getPosition().longitude+"");
                     poiList.add(poi.getName());
+                    Log.d("Loc", "onMapPoiClick: "+poi.getName()+" "+poi.getPosition().latitude+" "+poi.getPosition().longitude);
                     Toast.makeText(LocationActivity.this, poi.getName()+"添加成功", Toast.LENGTH_SHORT).show();
                     Message message = new Message();
                     message.what = 0X1115;
