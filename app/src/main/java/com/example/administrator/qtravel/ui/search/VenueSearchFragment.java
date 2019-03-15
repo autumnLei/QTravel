@@ -125,22 +125,32 @@ public class VenueSearchFragment extends Fragment {
                 new Thread() {
                     @Override
                     public void run() {
-                        super.run();
-                        try {
-                            for (int i = 0; i < list.size(); i++) {
-                                VenueSearchRecyclerView venueSearchRecyclerView = list.get(i);
-                                if (venueSearchRecyclerView.getUid().equals(poiDetailResult.getUid())) {
-                                    Document doc = Jsoup.connect(poiDetailResult.detailUrl).get();
-                                    Element el = doc.select(".meta-img").first();
-                                    Element el_img = el.select("img").first();
-                                    venueSearchRecyclerView.setImage(el_img.attr("src"));
-                                    venueSearchRecyclerView.setUrl(poiDetailResult.detailUrl);
-                                    break;
+//                        getActivity().runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+                                try {
+                                    for (int i = 0; i < list.size(); i++) {
+                                        VenueSearchRecyclerView venueSearchRecyclerView = list.get(i);
+                                        if (venueSearchRecyclerView.getUid().equals(poiDetailResult.getUid())) {
+                                            Document doc = Jsoup.connect(poiDetailResult.detailUrl).get();
+                                            Element el = doc.select(".meta-img").first();
+                                            Element el_img = el.select("img").first();
+                                            venueSearchRecyclerView.setImage(el_img.attr("src"));
+                                            venueSearchRecyclerView.setUrl(poiDetailResult.detailUrl);
+                                            break;
+                                        }
+                                    }
+                                  getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            venueSearchRecyclerViewAdapter.notifyDataSetChanged();
+                                        }
+                                  });
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+//                            }
+//                        });
                     }
                 }.start();
             }

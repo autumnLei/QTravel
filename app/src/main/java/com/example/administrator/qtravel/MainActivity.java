@@ -197,12 +197,11 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 }
                             }).create().show();
-
                 }
             }
         });
         if (isLogin)
-            imageView.setImageResource(R.drawable.touxiang);
+            imageView.setImageResource(R.drawable.defaultmap);
         //recyclerview初始化
         RecyclerView recyclerView = binding.include.recyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -230,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 initBanner();
+                initRecyclerView();
             }
         });
     }
@@ -242,6 +242,8 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.nav_own:
                         Intent intent = new Intent(MyApplication.getContext(), NavHomePageActivity.class);
+                        intent.putExtra("name", account);
+                        Log.d("nav", "onNavigationItemSelected: "+account);
                         startActivity(intent);
                         break;
                     case R.id.nav_about:
@@ -304,6 +306,7 @@ public class MainActivity extends AppCompatActivity {
                break;
             case R.id.search:
                 Intent intent2 = new Intent(this, WebViewActivity.class);
+                //不能用https
                 intent2.putExtra("Url", "http://www.baidu.com/");
                 intent2.putExtra("Title", "百度首页");
                 startActivity(intent2);
@@ -384,13 +387,11 @@ public class MainActivity extends AppCompatActivity {
 
             case REQUEST_ALBUM:
                 createImageFile();
-                if (!mImageFile.exists()) {
-                    return;
-                }
-
-                Uri uri = data.getData();
-                if (uri != null) {
-                    imageView.setImageURI(uri);
+                if (mImageFile.exists()) {
+                    Uri uri = data.getData();
+                    if (uri != null)
+                        imageView.setImageURI(uri);
+                    Log.d("image", "onActivityResult: "+mImageFile);
                 }
                 break;
         }
@@ -437,6 +438,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 super.run();
+                messages.clear();
                 String shortLocal = null;
                 if (local != null) {
                     shortLocal = local.substring(0, local.length() - 1);
@@ -445,7 +447,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Log.d("56", "run: " + shortLocal);
                 try {
-                    messages.clear();
                     Document doc = Jsoup.connect("https://www.douban.com/search?cat=1015&q=" + shortLocal).get();
                     Log.d("56", "run: 连接豆瓣正常");
                     Elements els = doc.select("div.content");
@@ -465,7 +466,7 @@ public class MainActivity extends AppCompatActivity {
                     Element els_temp = doc_pic.select("ul.pli").first();
                     Elements els_pic = els_temp.select("li");
                     for (int i = 0; i < els_pic.size(); i++) {
-                        if (i > messages.size()){
+                        if (i >= messages.size()){
                             break;
                         }
                         Element el_pic = els_pic.get(i).select("img").first();
