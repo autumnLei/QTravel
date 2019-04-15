@@ -68,7 +68,7 @@ public class FrendSearchActivity extends AppCompatActivity {
 
     public void connect(){
         try {
-            webSocketConnection.connect("ws://111.230.17.135:8080/QTravel/websocket/chat", new WebSocketConnectionHandler(){
+            webSocketConnection.connect("ws://www.huang-ray.com:8080/QTravel/websocket/chat", new WebSocketConnectionHandler(){
                 @Override
                 public void onOpen() {
                     Log.d(TAG, "onOpen: ");

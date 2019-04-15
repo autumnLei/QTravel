@@ -412,17 +412,23 @@ public class MainActivity extends AppCompatActivity {
                 String shortLocal = null;
                 if (local != null) {
                     shortLocal = local.substring(0, local.length() - 1);
+                }else{
+                    shortLocal = "张家界";
                 }
+                Log.d("55555", "initBanner: " + shortLocal);
                 try {
-                    Document doc_add = Jsoup.connect("http://www.ivsky.com/search.php?q=" + shortLocal).get();
-                    Element els_temp2 = doc_add.select("ul.pli").first();
-                    Elements els_add = els_temp2.select("li");
-                    for (int i = 0; i < 6; i++) {
+                    Document doc_pic = Jsoup.connect("http://www.ivsky.com/search.php?q=" + shortLocal).get();
+                    Element els_temp = doc_pic.select("ul.pli").first();
+                    Elements els_add = els_temp.select("li");
+                    for (int i = 0; i < els_add.size(); i++) {
+                        Log.d("55555", "run: "+i);
                         Element el_add = els_add.get(i).select("a").first();
                         Document doc_detail = Jsoup.connect("http://www.ivsky.com/" + el_add.attr("href")).get();
                         Element el_detail = doc_detail.select("div.left").first();
-                        pictures.add(el_detail.select("img").first().attr("src"));
+                        pictures.add("http:"+el_detail.select("img").first().attr("src"));
                         Log.d("55555", "run: "+pictures.get(i).toString());
+                        if(i>5)
+                            break;
                    }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -445,7 +451,7 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     shortLocal = "张家界";
                 }
-                Log.d("56", "run: " + shortLocal);
+                Log.d("55555", "initRecyclerview: " + shortLocal);
                 try {
                     Document doc = Jsoup.connect("https://www.douban.com/search?cat=1015&q=" + shortLocal).get();
                     Log.d("56", "run: 连接豆瓣正常");

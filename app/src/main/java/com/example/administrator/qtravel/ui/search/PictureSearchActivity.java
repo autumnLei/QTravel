@@ -107,7 +107,7 @@ public class PictureSearchActivity extends AppCompatActivity {
                         Element el_detail = doc_detail.select("div.left").first();
                         PictureSearchRecyclerView pic = new PictureSearchRecyclerView();
                         pic.setHref(els_add.get(i).select("img").first().attr("src"));
-                        pic.setUrl(el_detail.select("img").first().attr("src"));
+                        pic.setUrl("http:"+el_detail.select("img").first().attr("src"));
                         mList.add(pic);
                     }
                 } catch (Exception e) {
@@ -140,7 +140,7 @@ public class PictureSearchActivity extends AppCompatActivity {
                         Element el_detail = doc_detail.select("div.left").first();
                         PictureSearchRecyclerView pic = new PictureSearchRecyclerView();
                         pic.setHref(els_add.get(i).select("img").first().attr("src"));
-                        pic.setUrl(el_detail.select("img").first().attr("src"));
+                        pic.setUrl("http:"+el_detail.select("img").first().attr("src"));
                         mList.add(pic);
                     }
                 } catch (Exception e) {
