@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             try {
-                                String path = "http://111.230.17.135:8080/QTravel/login?name=" + account + "&password=" + password;
+                                String path = "http://www.huang-ray.com:8080/QTravel/login?name=" + account + "&password=" + password;
                                 URL url = new URL(path);
                                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                                 connection.connect();

@@ -48,7 +48,7 @@ public class SignUpActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             try {
-                                String path = "http://111.230.17.135:8080/QTravel/register?name=" + name + "&password=" + password;
+                                String path = "http://www.huang-ray.com:8080/QTravel/register?name=" + name + "&password=" + password;
                                 URL url = new URL(path);
                                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                                 connection.connect();

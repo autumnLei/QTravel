@@ -519,7 +519,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void uploadMultiFile(File file) {
-        final String url = "http://111.230.17.135:8080/QTravel/UploadFileServlet";
+        final String url = "http://www.huang-ray.com:8080/QTravel/UploadFileServlet";
 
         RequestBody fileBody = RequestBody.create(MediaType.parse("application/octet-stream"), file);
         RequestBody requestBody = new MultipartBody.Builder()
